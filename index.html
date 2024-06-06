@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Food App</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        select, button, input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+        button {
+            background: linear-gradient(to right, #2ecc71, #27ae60);
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: linear-gradient(to right, #27ae60, #2ecc71);
+        }
+        .meal-suggestions, .favorites, .weekly-plan, .tips {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .meal-suggestions h2, .favorites h2, .weekly-plan h2, .tips h2 {
+            font-size: 1.5em;
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+        .meal-suggestions p, .favorite-meals p, .weekly-plan p, .tips ul {
+            margin: 10px 0;
+        }
+        .meal-suggestions button, .favorites button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .meal-suggestions button:hover, .favorites button:hover {
+            background: #2980b9;
+        }
+        .nutrition-info {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .tips ul {
+            padding-left: 20px;
+        }
+        .tips ul li {
+            margin: 5px 0;
+        }
+        #chartContainer {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Healthy Food App</h1>
+    <div class="form-group">
+        <label for="diet">Select Diet:</label>
+        <select id="diet">
+            <option value="">-- Select Diet --</option>
+            <option value="vegan">Vegan</option>
+            <option value="mediterranean">Mediterranean diet</option>
+            <option value="paleo">Paleo diet</option>
+            <option value="mind">MIND diet</option>
+            <option value="ketogenic">Ketogenic diet</option>
+            <option value="atkins">Atkins diet</option>
+            <option value="low-protein">Low protein</option>
+            <option value="regular">Regular diet</option>
+            <option value="intermittent-fasting">Intermittent fasting</option>
+            <option value="dukan">The Dukan Diet</option>
+            <option value="pescatarian">Pescatarian</option>
+            <option value="alkaline">Alkaline diet</option>
+            <option value="dash">DASH diet</option>
+            <option value="flexitarian">Flexitarian</option>
+            <option value="liquid">Liquid diets</option>
+            <option value="low-fat">Low fat</option>
+            <option value="mayo-clinic">Mayo Clinic Diet</option>
+            <option value="raw-foodism">Raw foodism</option>
+            <option value="weight-watchers">WeightWatchers</option>
+            <option value="carnivore">Carnivore</option>
+            <option value="diabetic">Diabetic diet</option>
+            <option value="fad">Fad diets</option>
+            <option value="pureed">Pureed diet</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="age-group">Select Age Group:</label>
+        <select id="age-group">
+            <option value="">-- Select Age Group --</option>
+            <option value="children">Children</option>
+            <option value="adults">Adults</option>
+            <option value="seniors">Seniors</option>
+        </select>
+    </div>
+    <button id="get-suggestions">Get Meal Suggestions</button>
+    <div class="meal-suggestions" id="meal-suggestions"></div>
+    <div id="chartContainer"></div>
+    <div class="favorites" id="favorites">
+        <h2>Favorite Meals</h2>
+        <div class="favorite-meals" id="favorite-meals"></div>
+    </div>
+    <div class="weekly-plan" id="weekly-plan">
+        <h2>Weekly Meal Plan</h2>
+        <button id="generate-plan">Generate Weekly Plan</button>
+        <div id="plan"></div>
+    </div>
+    <div class="tips" id="tips">
+        <h2>Healthy Eating Tips</h2>
+        <ul id="tips-content"></ul>
+    </div>
+</div>
+<script>
+    document.getElementById('get-suggestions').addEventListener('click', function() {
+        const diet = document.getElementById('diet').value;
+        const ageGroup = document.getElementById('age-group').value;
+        const suggestionsDiv = document.getElementById('meal-suggestions');
+        const chartContainer = document.getElementById('chartContainer');
+
+        if (!diet || !ageGroup) {
+            alert('Please select both a diet and an age group.');
+            return;
+        }
+
+        // Clear previous suggestions and chart
+        suggestionsDiv.innerHTML = '';
+        chartContainer.innerHTML = '';
+
+        // Mock meal suggestions with nutritional info
+        const meals = {
+            breakfast: [
+                { name: 'Oatmeal with berries', calories: 150, protein: 5, carbs: 27, fat: 3 },
+                { name: 'Green smoothie', calories: 200, protein: 2, carbs: 45, fat: 2 },
+                { name: 'Avocado toast', calories: 250, protein: 6, carbs: 30, fat: 15 }
+            ],
+            lunch: [
+                { name: 'Quinoa salad', calories: 350, protein: 10, carbs: 50, fat: 12 },
+                { name: 'Grilled chicken with veggies', calories: 400, protein: 35, carbs: 30, fat: 15 },
+                { name: 'Lentil soup', calories: 300, protein: 18, carbs: 40, fat: 10 }
+            ],
+            dinner: [
+                { name: 'Baked salmon', calories: 450, protein: 40, carbs: 10, fat: 25 },
+                { name: 'Stir-fried tofu with vegetables', calories: 300, protein: 20, carbs: 35, fat: 10 },
+                { name: 'Stuffed bell peppers', calories: 350, protein: 15, carbs: 45, fat: 15 }
+            ]
+        };
+
+        const mealTypeNames = {
+            breakfast: 'Breakfast',
+            lunch: 'Lunch',
+            dinner: 'Dinner'
+        };
+
+        const ageGroupMessages = {
+            children: 'for Children',
+            adults: 'for Adults',
+            seniors: 'for Seniors'
+        };
+
+        const chartData = {
+            labels: [],
+            datasets: [
+                { label: 'Calories', data: [], backgroundColor: 'rgba(255, 99, 132, 0.2)', borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 1 },
+                { label: 'Protein (g)', data: [], backgroundColor: 'rgba(54, 162, 235, 0.2)', borderColor: 'rgba(54, 162, 235, 1)', borderWidth: 1 },
+                { label: 'Carbs (g)', data: [], backgroundColor: 'rgba(255, 206, 86, 0.2)', borderColor: 'rgba(255, 206, 86, 1)', borderWidth: 1 },
+                { label: 'Fat (g)', data: [], backgroundColor: 'rgba(75, 192, 192, 0.2)', borderColor: 'rgba(75, 192, 192, 1)', borderWidth: 1 }
+            ]
+        };
+
+        // Generate meal suggestions
+        for (const [mealType, mealOptions] of Object.entries(meals)) {
+            const section = document.createElement('div');
+            section.innerHTML = `<h2>${mealTypeNames[mealType]} Suggestions ${ageGroupMessages[ageGroup]}</h2>`;
+            mealOptions.forEach(meal => {
+                const mealItem = document.createElement('p');
+                mealItem.textContent = `${meal.name} - ${meal.calories} kcal, ${meal.protein}g protein, ${meal.carbs}g carbs, ${meal.fat}g fat`;
+                const favButton = document.createElement('button');
+                favButton.textContent = 'Add to Favorites';
+                favButton.addEventListener('click', () => addToFavorites(meal));
+                mealItem.appendChild(favButton);
+                section.appendChild(mealItem);
+
+                // Add meal data to chart
+                chartData.labels.push(meal.name);
+                chartData.datasets[0].data.push(meal.calories);
+                chartData.datasets[1].data.push(meal.protein);
+                chartData.datasets[2].data.push(meal.carbs);
+                chartData.datasets[3].data.push(meal.fat);
+            });
+            suggestionsDiv.appendChild(section);
+        }
+
+        // Render nutritional analysis chart
+        const ctx = document.createElement('canvas');
+        chartContainer.appendChild(ctx);
+        new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    });
+
+    function addToFavorites(meal) {
+        const favoriteMealsDiv = document.getElementById('favorite-meals');
+        const mealItem = document.createElement('p');
+        mealItem.textContent = `${meal.name} - ${meal.calories} kcal, ${meal.protein}g protein, ${meal.carbs}g carbs, ${meal.fat}g fat`;
+        favoriteMealsDiv.appendChild(mealItem);
+    }
+
+    document.getElementById('generate-plan').addEventListener('click', function() {
+        const diet = document.getElementById('diet').value;
+        const ageGroup = document.getElementById('age-group').value;
+        const planDiv = document.getElementById('plan');
+
+        if (!diet || !ageGroup) {
+            alert('Please select both a diet and an age group.');
+            return;
+        }
+
+        // Clear previous plan
+        planDiv.innerHTML = '';
+
+        // Mock weekly meal plan
+        const weeklyMeals = [
+            'Oatmeal with berries - Quinoa salad - Baked salmon',
+            'Green smoothie - Grilled chicken with veggies - Stir-fried tofu with vegetables',
+            'Avocado toast - Lentil soup - Stuffed bell peppers',
+            'Oatmeal with berries - Quinoa salad - Baked salmon',
+            'Green smoothie - Grilled chicken with veggies - Stir-fried tofu with vegetables',
+            'Avocado toast - Lentil soup - Stuffed bell peppers',
+            'Oatmeal with berries - Quinoa salad - Baked salmon'
+        ];
+
+        weeklyMeals.forEach((meal, index) => {
+            const mealItem = document.createElement('p');
+            mealItem.textContent = `Day ${index + 1}: ${meal}`;
+            planDiv.appendChild(mealItem);
+        });
+    });
+
+    // Mock tips and articles
+    const tipsContent = [
+        'Eat a variety of foods from all food groups.',
+        'Incorporate plenty of fruits and vegetables into your diet.',
+        'Stay hydrated by drinking plenty of water.',
+        'Choose whole grains over refined grains.',
+        'Limit added sugars and saturated fats.',
+        'Control portion sizes and avoid overeating.',
+        'Stay active and exercise regularly.'
+    ];
+
+    const tipsDiv = document.getElementById('tips-content');
+    tipsContent.forEach(tip => {
+        const tipItem = document.createElement('li');
+        tipItem.textContent = tip;
+        tipsDiv.appendChild(tipItem);
+    });
+</script>
+</body>
+</html>
