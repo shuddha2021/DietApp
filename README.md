@@ -58,6 +58,11 @@ script.js: The JavaScript file containing the app logic.
 
 ### Screenshot
 
+<img width="1091" alt="Screenshot 2024-06-06 at 3 34 24 PM" src="https://github.com/shuddha2021/DietApp/assets/81951239/8ae48a79-2e86-4adb-a8ce-bada5d4c3540">
+
+<img width="1089" alt="Screenshot 2024-06-06 at 3 34 41 PM" src="https://github.com/shuddha2021/DietApp/assets/81951239/00acc192-c6c3-48a3-a32f-d25a51889ae2">
+
+
 ### Why This Project Is Useful
 This project serves as a practical tool for individuals looking to maintain a healthy diet tailored to their dietary preferences and age group. It also demonstrates the use of web technologies such as HTML, CSS, JavaScript, and Chart.js in building an interactive web application.
 
