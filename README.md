@@ -63,7 +63,7 @@ SwiftCalc is a modern and elegant calculator app built with SwiftUI. This app pr
 
 2. Open the project in Xcode
    ```cd swiftcalc
-open SwiftCalc.xcodeproj
+      open SwiftCalc.xcodeproj
 
 ### Running the Application
 
