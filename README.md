@@ -1,84 +1,70 @@
-# SwiftCalc
+# Healthy Food App
 
-SwiftCalc is a modern and elegant calculator app built with SwiftUI. This app provides basic arithmetic operations in a clean, user-friendly interface, and includes features such as percentage calculations and sign inversion.
+A user-friendly web application to help individuals select meals based on various diets and age groups. This app offers meal suggestions, weekly meal plans, and nutritional analysis using Chart.js.
 
 ## Features
 
-- **Basic Arithmetic Operations**: Perform addition, subtraction, multiplication, and division.
-- **Percentage Calculation**: Easily convert numbers to percentages.
-- **Sign Inversion**: Toggle the sign of numbers.
-- **Clear Function**: Quickly reset the calculator.
-- **Decimal Support**: Handle decimal numbers in calculations.
-- **User-friendly UI**: A clean and intuitive interface designed with SwiftUI.
-- **Responsive Design**: Optimized for both iPhone and iPad screens.
+- **Diet Selection**:
+  - Choose from a variety of diets including Vegan, Mediterranean, Paleo, Ketogenic, and more.
+- **Age Group Selection**:
+  - Get meal suggestions tailored to children, adults, or seniors.
+- **Meal Suggestions**:
+  - Receive breakfast, lunch, and dinner suggestions with nutritional information.
+- **Nutritional Analysis**:
+  - Visualize the nutritional breakdown of suggested meals using Chart.js.
+- **Favorites**:
+  - Save favorite meals for quick access.
+- **Weekly Meal Plan**:
+  - Generate a weekly meal plan based on selected diet and age group.
+- **Healthy Eating Tips**:
+  - Access a list of tips to maintain a healthy diet.
 
 ## Technologies Used
 
-- **Swift**: The programming language used to build the app.
-- **SwiftUI**: A framework for building the user interface.
-
-## Core Logic
-
-### Button Actions
-
-- **AC**: Clears all inputs and resets the calculator.
-- **+/-**: Inverts the sign of the current input number.
-- **%**: Converts the current input number to a percentage.
-- **Arithmetic Operators (/ x - +)**: Sets the operation and prepares for the next input.
-- **=**: Calculates the result based on the current operation and inputs.
-- **Decimal Point**: Allows for decimal number input.
-- **Number Buttons**: Appends the pressed number to the current input.
-
-### Calculation Logic
-
-- **First Number Storage**: Stores the first number when an operation button is pressed.
-- **Second Number Storage**: Stores the second number when the equals button is pressed.
-- **Operation Handling**: Performs the arithmetic operation when the equals button is pressed and displays the result.
-
-## Screenshot
-
-<img width="1606" alt="Screenshot 2024-06-18 at 1 35 13 PM" src="https://github.com/shuddha2021/healthy-food-app/assets/81951239/41e1f8a2-56f2-47d1-bc8c-3201b477e570">
-
-<img width="1633" alt="Screenshot 2024-06-18 at 1 35 00 PM" src="https://github.com/shuddha2021/healthy-food-app/assets/81951239/b685c0a6-4624-4997-96c2-ca557846f06e">
-
-## Project Structure
-
-- `ContentView.swift`: The main SwiftUI view containing the user interface and logic.
-- `buttonPressed(_:)`: Handles the logic for each button press.
-- `calculateResult()`: Performs the calculation based on the current operation and inputs.
-- `buttonWidth(_:)` & `buttonHeight()`: Calculate the dimensions of the buttons for a responsive design.
-- `buttonColor(_:)`: Determines the color of each button based on its function.
+- **HTML**: Structure of the web application.
+- **CSS**: Styling the web application.
+- **JavaScript**: Interactivity and logic implementation.
+- **Chart.js**: Visualizing nutritional data.
 
 ## Getting Started
 
 ### Prerequisites
 
-- **Xcode**: Ensure you have Xcode installed on your Mac.
+To run this project, you need a modern web browser.
 
 ### Installation
 
 1. Clone the repository.
    ```bash
-   git clone https://github.com/yourusername/swiftcalc.git
+   git clone https://github.com/yourusername/healthy-food-app.git
+2. Navigate to the project directory.
+bash
+Copy code
+cd healthy-food-app
+3. Open index.html in your web browser to run the application.
+   
+### Project Structure
+index.html: The main HTML file containing the structure of the app.
+style.css: The CSS file for styling the app.
+script.js: The JavaScript file containing the app logic.
 
-2. Open the project in Xcode
-   ```cd swiftcalc
-      cd swiftcalc
-      open SwiftCalc.xcodeproj
+### Usage
+1. Select a diet from the dropdown menu.
+2. Select an age group from the dropdown menu.
+3. Click "Get Meal Suggestions" to receive meal suggestions.
+4. Add meals to your favorites.
+5. Generate a weekly meal plan.
+6. Review healthy eating tips.
 
-### Running the Application
+### Screenshot
 
-1. Select the target device (iPhone or iPad) in Xcode.
-2. Click the Run button (or press Cmd+R) to build and run the app on the selected device or simulator.
+<img width="1091" alt="Screenshot 2024-06-06 at 3 34 24 PM" src="https://github.com/shuddha2021/DietApp/assets/81951239/8ae48a79-2e86-4adb-a8ce-bada5d4c3540">
+
+<img width="1089" alt="Screenshot 2024-06-06 at 3 34 41 PM" src="https://github.com/shuddha2021/DietApp/assets/81951239/00acc192-c6c3-48a3-a32f-d25a51889ae2">
+
 
 ### Why This Project Is Useful
-
-This project serves as a practical example of building a calculator app using SwiftUI, demonstrating the use of state management, UI design, and basic arithmetic operations in a mobile application. It provides a solid foundation for anyone looking to learn or improve their skills in iOS development with Swift and SwiftUI.
+This project serves as a practical tool for individuals looking to maintain a healthy diet tailored to their dietary preferences and age group. It also demonstrates the use of web technologies such as HTML, CSS, JavaScript, and Chart.js in building an interactive web application.
 
 ### Contributing
-
 Contributions to this project are welcome. Please fork the repository and create a pull request with your changes.
-
-### License
-
-This project is licensed under the MIT License.
